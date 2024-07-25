@@ -197,9 +197,10 @@
     		fetch("/plant/date?id="+plant.id)
     			.then(res => res.text())
     			.then(data => {
+    				data = data.slice(1, data.length-1);
+    				target.previousElementSibling.querySelector(".next-date").textContent = data;
     				
-    				target.previousElementSibling.querySelector(".next-date").textContent = data.slice(1, data.length - 1);;
-    				
+    				alert("물을 주셨군요! 다음 물 줄 날짜는 "+data+" 입니다!");
     			});
     	}
     

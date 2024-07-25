@@ -35,11 +35,41 @@ public class PlantController {
 	
 	@PostMapping("/form")
 	public String regist(Plant plant, Model model) { // DB 입력
-		System.out.println(">>>POST form");
-		System.out.println("plant>>"+plant);
+//		System.out.println(">>>POST form");
+//		System.out.println("plant>>"+plant);
+//		try {
+//		} catch(SQLException e) {
+//			e.printStackTrace();
+//		}
+		
+
+//		service.add(plant);
+		int period = Integer.parseInt(plant.getPeriod());
+		Date currentDate = plant.getDate();
+		
+		// SimpleDateFormat을 사용하여 날짜 형식 지정
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.DATE, period);
+		String nextDateStr = format.format(cal.getTime());
+		
+		
+		// String을 java.sql.Date로 변환
+        java.util.Date utilDate = null;
 		try {
-			service.add(plant);
-		} catch(SQLException e) {
+			utilDate = format.parse(nextDateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+		System.out.println("date>>"+ sqlDate);
+
+		try {
+			service.add(plant.getName(), plant.getPeriod(), sqlDate);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "redirect:list";

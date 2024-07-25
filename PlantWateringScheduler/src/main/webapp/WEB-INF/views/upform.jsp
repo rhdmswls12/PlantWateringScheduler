@@ -112,7 +112,7 @@ input {
             	<div class="form-group col-md-12">
             		<label class="" for="name">이름</label>
             		<div class="">
-            		    <input type="text" id="name" name="name"
+            		    <input type="text" id="name" name="name" value="${plant.name}"
             		        class="form-control input-sm" required/>
             		</div>
             	</div>
@@ -122,7 +122,7 @@ input {
             	<div class="form-group col-md-12">
             		<label class="" for="period">주기</label>
             		<div class="">
-            			<input type="text" id="date" name="period"
+            			<input type="text" id="date" name="period" value="${plant.period}"
             				class="form-control input-sm" required/>
             		</div>
             	</div>
@@ -132,7 +132,7 @@ input {
             	<div class="form-group col-md-12">
             		<label class="" for="date">마지막 물 준 날</label>
             		<div class="">
-            			<input type="date" id="date" name="date"
+            			<input type="date" id="date" name="date" value="${plant.date}"
             				class="form-control input-sm"/>
             		</div>
             	</div>

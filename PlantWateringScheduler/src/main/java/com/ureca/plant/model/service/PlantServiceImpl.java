@@ -17,8 +17,8 @@ public class PlantServiceImpl implements PlantService {
 	PlantDAO dao;
 	
 	@Override
-	public int add(Plant plant) throws SQLException {
-		return dao.insert(plant);
+	public int add(String name, String period, Date date) throws SQLException {
+		return dao.insert(name, period, date);
 	}
 
 	@Override
