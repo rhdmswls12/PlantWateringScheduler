@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core"  prefix="c" %>
+<%@ page import = "java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <style type="text/css">
 	    body {
 			position: relative;
@@ -24,18 +27,19 @@
 			align-items: center;
 		}
 		.add {
-			width: 50px;
-	    	height: 50px;
+			width: 60px;
+	    	height: 60px;
 	    	position: absolute;
-	    	top: 20px;
-	    	right: 30px;
-	    	border-radius: 50%;
+	    	top: 0;
+	    	right: 10px;
 	    	display: flex;
 	    	justify-content: center;
 	    	align-items: center;
+	    	color: #75b064;
 	    	}
 		.add:hover {
 	    	cursor: pointer;
+	    	color: #598c4a;
 		}
 		.add a {
 			color: black;
@@ -66,14 +70,15 @@
 	    	align-items: center;
 	    }
 	    .next-date-title {
-	    	font-weight: bold;
+	    	font-weight: 600;
 	    }
 	    .next-date {
 	    	color: green;
+	    	margin-top: 5px;
 	    }
 	    .circle {
-	    	width: 50px;
-	    	height: 50px;
+	    	width: 70px;
+	    	height: 70px;
 	    	border-radius: 50%;
 	    	background: #75b064;
 	    	color: white;
@@ -87,7 +92,6 @@
 	    }
 	    .information {
 	    	flex-derection: column;
-	    	gap: 20px;
 	    }
 	    .plant-profile {
 	    	width: 100%;
@@ -96,10 +100,15 @@
 	    	
 	    }
 	    .plant-name {
-	    	font-weight: bold;
+	    	font-weight: 600;
 	    }
 	    .no-data {
 	    	text-align: center;
+	    }
+	    .button-group {
+	    	display: flex;
+	    	gap: 15px;
+	    	margin-top: 5px;
 	    }
 	    .edit, .delete {
 	    	width: 30px;
@@ -119,6 +128,9 @@
 	    	cursor: pointer;
 	    	color: #f73942;
 	    }
+	    a{
+	    	color: white;
+	    }
 	    a:hover {
 	    	text-decoration: none;
 	    }
@@ -126,20 +138,23 @@
 </head>
 <body>
 <div class="container">
+	<div class="title">
+		<h3 class="p-3">내 식물</h3>
 	<div class="add">
 		<a href="form">
    			<span class="material-symbols-outlined add">add</span>
    		</a>
 	</div>
-	<div class="title">
-		<h3 class="p-3">내 식물</h3>
 	</div>
 
 		<c:if test="${!empty list }">
 			<c:forEach items="${list}" var="plant">
 			<div class="plant-item">
+			
+
+			
 				<div class="date">
-					<div class="next-date-title">다음 물 줄 날짜</div>
+					<div class="next-date-title">물 줄 날짜</div>
 					<div class="next-date">${plant.date}</div>
 				</div>
 				<!-- 
@@ -147,8 +162,10 @@
 					<img class="plant-profile" src="../images/monstera.jpg">
 				</div>
 				 -->
-				<div class="circle">
-					<span class="material-symbols-outlined">Potted_Plant</span>
+				<div class="circle" onclick="test(this, { id: ${plant.id}, name: '${plant.name}', period: ${plant.period}, date: '${plant.date}' })">
+					<a href="javascript:void(0)">
+						<span class="material-symbols-outlined">Potted_Plant</span>
+					</a>
 				</div>
 				<div class="information">
 					<div class="plant-name">${plant.name}</div>
@@ -157,7 +174,7 @@
 	              		    <a href="upform?id=${plant.id}" style="color: black;">완료</a>
 	              		</button>
 	              		 -->
-              		    <a href="upform?id=${plant.id}">
+              		     <a href="upform?id=${plant.id}">
               		    	<span class="material-symbols-outlined edit">edit</span>
               		    </a>
               		
@@ -174,5 +191,18 @@
 		</c:if>
 
     </div>
+    <script>
+    	
+    	function test(target, plant) {
+    		fetch("/plant/date?id="+plant.id)
+    			.then(res => res.text())
+    			.then(data => {
+    				
+    				target.previousElementSibling.querySelector(".next-date").textContent = data.slice(1, data.length - 1);;
+    				
+    			});
+    	}
+    
+    </script>
 </body>
 </html>

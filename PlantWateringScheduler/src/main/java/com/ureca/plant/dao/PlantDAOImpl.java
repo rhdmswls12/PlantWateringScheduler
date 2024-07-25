@@ -74,16 +74,42 @@ public class PlantDAOImpl implements PlantDAO {
 		return pstmt.executeUpdate();
 	}
 	
-//	@Override
-//	public int updateDate(Plant plant) throws SQLException {
-//		Connection conn = dbUtil.getConnection();
-//		String sql = "update plant set date=DATE_ADD(date, interval ? day)";
-//		PreparedStatement pstmt = conn.prepareStatement(sql);
+	@Override
+	public int updateDate(int id, Date date) throws SQLException {
+		Connection conn = dbUtil.getConnection();
+		Plant plant = new Plant();
+		String sql = "update plant set date=? where id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+//		int id = plant.getId();
+//		int period = Integer.parseInt(plant.getPeriod()); // 주기 가져오기
+//		Date currentDate = plant.getDate(); // 현재 마지막으로 물 준 날짜 가져오기
 //		
-//		pstmt.setString(1, plant.getImage());
+//		// SimpleDateFormat을 사용하여 날짜 형식 지정
+//		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); // 형식 지정
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(currentDate);
+//		cal.add(Calendar.DATE, period);
+//		String nextDateStr = format.format(cal.getTime());
 //		
-//		return pstmt.executeUpdate();
-//	}
+//		
+//		// String을 java.sql.Date로 변환
+//        java.util.Date utilDate = null;
+//		try {
+//			utilDate = format.parse(nextDateStr);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+//
+//		System.out.println("date>>"+ sqlDate);
+
+		
+		pstmt.setDate(1, date);
+		pstmt.setInt(2, id);
+		
+		return pstmt.executeUpdate();
+	}
 
 	@Override
 	public int delete(int id) throws SQLException {

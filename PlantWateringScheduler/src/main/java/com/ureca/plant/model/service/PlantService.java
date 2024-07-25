@@ -1,5 +1,6 @@
 package com.ureca.plant.model.service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public interface PlantService {
 	
 		public int add(Plant plant) throws SQLException;
 		public int edit(Plant plant) throws SQLException;
+		public int editDate(int id, Date date) throws SQLException;
 		public int remove(int id) throws SQLException;
 		
 		public Plant get(int id) throws SQLException;

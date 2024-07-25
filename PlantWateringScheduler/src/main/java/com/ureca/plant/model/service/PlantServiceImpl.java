@@ -1,5 +1,6 @@
 package com.ureca.plant.model.service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,6 +25,11 @@ public class PlantServiceImpl implements PlantService {
 	public int edit(Plant plant) throws SQLException {
 		return dao.update(plant);
 	}
+	
+	@Override
+	public int editDate(int id, Date date) throws SQLException {
+		return dao.updateDate(id, date);
+	} // 날짜 갱신
 
 	@Override
 	public int remove(int id) throws SQLException {
