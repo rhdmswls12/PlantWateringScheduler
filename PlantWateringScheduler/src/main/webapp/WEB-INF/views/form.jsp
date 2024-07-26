@@ -82,6 +82,14 @@ a:hover {
 	color: white;
 	text-decoration: none;
 }
+.failure-message {
+	font-size: 12px;
+	color: #f7195c;
+	margin: 5px;
+}
+.hide {
+	display: none;
+}
 </style>
 </head>
 <body>
@@ -101,7 +109,7 @@ a:hover {
             		<label class="" for="name">이름</label>
             		<div class="">
             		    <input type="text" id="name" name="name"
-            		        class="form-control input-sm" required/>
+            		        class="form-control input-sm" placeholder="이름" required/>
             		</div>
             	</div>
             </div>
@@ -134,17 +142,36 @@ a:hover {
             		<label class="" for="period">주기</label>
             		<div class="">
             			<input type="text" id="date" name="period"
-            				class="form-control input-sm" required/>
+            				class="form-control input-sm" pattern="[0-9]+" placeholder="주기(숫자)" required/>
             		</div>
+            		<div class="failure-message hide">숫자만 입력하세요.</div>
             	</div>
             </div>
+            <script>
+            	let inputDateEl = document.querySelector('#date');
+            	let failureMessageEl = document.querySelector('.failure-message');
+            	
+            	function onlyNumber(str) {
+            		const regex = /^[0-9]*$/;
+            		return regex.test(str); // 숫자로만 이루어져 있는지 확인
+            	}
+            	inputDateEl.onkeyup = function() {
+            		if (inputDateEl.value.length) {
+            			if (onlyNumber(inputDateEl.value)) { // 숫자로만 이루어진 경우
+            				failureMessageEl.classList.add("hide");
+            			} else { 
+            				failureMessageEl.classList.remove("hide");
+            			}
+            		}
+            	}
+            </script>
             
             <div class="row">
             	<div class="form-group col-md-12">
             		<label class="" for="date">마지막 물 준 날</label>
             		<div class="">
             			<input type="date" id="date" name="date"
-            				class="form-control input-sm"/>
+            				class="form-control input-sm" required/>
             		</div>
             	</div>
             </div>
@@ -159,8 +186,6 @@ a:hover {
             		</button>
             	</div>
             </div>	
-            
-
         </form>
     </div>
     
