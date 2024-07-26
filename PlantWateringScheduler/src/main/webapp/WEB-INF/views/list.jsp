@@ -7,14 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-        	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style type="text/css">
@@ -39,10 +35,10 @@
 	    	color: #75b064;
 	    	}
 		.add:hover {
-	    	cursor: pointer;
 	    	color: #598c4a;
 		}
 		.add a {
+	    	cursor: pointer;
 			color: black;
 		}
 		h3 {
@@ -78,8 +74,28 @@
 	    	margin-top: 5px;
 	    }
 	    .circle {
-	    	width: 70px;
-	    	height: 70px;
+	    	width: 80px;
+	    	height: 80px;
+	    	border-radius: 50%;
+	    	background: #75b064;
+	    	color: white;
+	    	display: flex;
+	    	justify-content: center;
+	    	align-items: center;
+	    	position: relative;
+	    }
+	    .circle img {
+	    	width: 100%;
+	    	height: 100%;
+	    	object-fit: cover;
+	    	border-radius: 50%;
+	    }
+	    .watering {
+	    	position: absolute;
+	    	bottom: -10px;
+	    	right: -10px;
+	    	width: 40px;
+	    	height: 40px;
 	    	border-radius: 50%;
 	    	background: #75b064;
 	    	color: white;
@@ -87,9 +103,12 @@
 	    	justify-content: center;
 	    	align-items: center;
 	    }
-	    .circle:hover {
+	    .watering:hover {
 	    	cursor: pointer;
 	    	background: #598c4a;
+	    }
+	    .watering span {
+	    	color: white;
 	    }
 	    .information {
 	    	flex-derection: column;
@@ -179,16 +198,16 @@
 					<div class="next-date-title">물 줄 날짜</div>
 					<div class="next-date">${plant.date}</div>
 				</div>
-				<!-- 
+				 
 				<div class="circle">
 					<img class="plant-profile" src="../images/monstera.jpg">
+					<div class="watering" onclick="updateDate(this, { id: ${plant.id}, name: '${plant.name}', period: ${plant.period}, date: '${plant.date}' })">
+						<a href="javascript:void(0)">
+							<span class="material-symbols-outlined">Potted_Plant</span>
+						</a>
+					</div>
 				</div>
-				 -->
-				<div class="circle" onclick="test(this, { id: ${plant.id}, name: '${plant.name}', period: ${plant.period}, date: '${plant.date}' })">
-					<a href="javascript:void(0)">
-						<span class="material-symbols-outlined">Potted_Plant</span>
-					</a>
-				</div>
+				 
 				<div class="information">
 					<div class="plant-name">${plant.name}</div>
 					<div class="button-group">
@@ -227,14 +246,14 @@
     </div>
     <script>
     	
-    	function test(target, plant) {
+    	function updateDate(target, plant) {
     		fetch("/plant/date?id="+plant.id)
     			.then(res => res.text())
     			.then(data => {
     				data = data.slice(1, data.length-1);
-    				target.previousElementSibling.querySelector(".next-date").textContent = data;
+    				target.parentElement.previousElementSibling.querySelector(".next-date").textContent = data;
     				
-    				alert("물을 주셨군요! 다음 물 줄 날짜는 "+data+" 입니다!");
+    				alert("물을 주셨군요! "+plant.name+"의 주기는 "+plant.period+"일이고\r다음 물 줄 날짜는 "+data+" 입니다!");
     			});
     	}
     	
