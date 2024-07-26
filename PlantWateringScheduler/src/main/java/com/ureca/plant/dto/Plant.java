@@ -4,19 +4,19 @@ import java.sql.Date;
 
 public class Plant {
 	private int id;
-//	private String image;
+	private String file;
 	private String name;
-	private String period;
+	private int period;
 	private Date date;
 	
 	public Plant() {
 		
 	}
 
-	public Plant(int id, String name, String period, Date date) {
+	public Plant(int id, String file, String name, int period, Date date) {
 		super();
 		this.id = id;
-//		this.image = image;
+		this.file = file;
 		this.name = name;
 		this.period = period;
 		this.date = date;
@@ -30,13 +30,13 @@ public class Plant {
 		this.id = id;
 	}
 
-//	public String getImage() {
-//		return image;
-//	}
-//
-//	public void setImage(String image) {
-//		this.image = image;
-//	}
+	public String getFile() {
+		return file;
+	}
+
+	public void setImage(String file) {
+		this.file = file;
+	}
 	public String getName() {
 		return name;
 	}
@@ -45,11 +45,11 @@ public class Plant {
 		this.name = name;
 	}
 
-	public String getPeriod() {
+	public int getPeriod() {
 		return period;
 	}
 
-	public void setPeriod(String period) {
+	public void setPeriod(int period) {
 		this.period = period;
 	}
 
@@ -63,7 +63,7 @@ public class Plant {
 
 	@Override
 	public String toString() {
-		return "Plant [id=" + id + ", name=" + name + ", period=" + period + ", date=" + date + "]";
+		return "Plant [id=" + id + ", file=" + file + ", name=" + name + ", period=" + period + ", date=" + date + "]";
 	}
 	
 }

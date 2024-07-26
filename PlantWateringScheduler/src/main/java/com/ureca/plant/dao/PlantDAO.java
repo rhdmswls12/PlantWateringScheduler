@@ -14,8 +14,8 @@ import com.ureca.plant.dto.Plant;
 
 @Mapper
 public interface PlantDAO {
-	@Insert("insert into plant (name, period, date) values (#{name}, #{period}, #{date})")
-	public int insert(String name, String period, Date date) throws SQLException;
+	@Insert("insert into plant (file, name, period, date) values (#{file}, #{name}, #{period}, #{date})")
+	public int insert(String file, String name, int period, Date date) throws SQLException;
 	
 	@Update("update plant set name=#{name}, period=#{period}, date=#{date} where id=#{id}")
 	public int update(Plant plant) throws SQLException; // 정보 수정
@@ -26,9 +26,9 @@ public interface PlantDAO {
 	@Delete("delete from plant where id=#{id}")
 	public int delete(int id) throws SQLException;
 	
-	@Select("select id, name, period, date from plant where id=#{id}")
+	@Select("select id, file, name, period, date from plant where id=#{id}")
 	public Plant select(int id) throws SQLException;
 	
-	@Select("select id, name, period, date from plant")
+	@Select("select id, file, name, period, date from plant")
 	public List<Plant> selectAll() throws SQLException;
 }

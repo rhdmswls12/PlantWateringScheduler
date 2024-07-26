@@ -4,12 +4,14 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ureca.plant.dto.Plant;
 
 public interface PlantService {
 	// 명세 => Plant 추가/수정/삭제/조회/모두 조회
 	
-		public int add(String name, String period, Date date) throws SQLException;
+		public int add(String file, String name, int period, Date date) throws SQLException;
 		public int edit(Plant plant) throws SQLException;
 		public int editDate(int id, Date date) throws SQLException;
 		public int remove(int id) throws SQLException;

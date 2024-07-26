@@ -99,7 +99,7 @@ a:hover {
 
         <form method="post" enctype="multipart/form-data">
  			<div class="img-area select-image"">
- 				<input type="file" id="file" name="image" accept="image/*" hidden>
+ 				<input type="file" id="file" name="targetImage" accept="image/*" hidden>
  				<span class="material-symbols-outlined">image</span>
  				<p>식물 사진</p>
  				<!-- <img src="../images/monstera.jpg"> -->

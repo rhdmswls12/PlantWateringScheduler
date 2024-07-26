@@ -200,7 +200,7 @@
 				</div>
 				 
 				<div class="circle">
-					<img class="plant-profile" src="../images/monstera.jpg">
+					<img class="plant-profile" src="${plant.file}">
 					<div class="watering" onclick="updateDate(this, { id: ${plant.id}, name: '${plant.name}', period: ${plant.period}, date: '${plant.date}' })">
 						<a href="javascript:void(0)">
 							<span class="material-symbols-outlined">Potted_Plant</span>
@@ -245,8 +245,8 @@
 
     </div>
     <script>
-    	
     	function updateDate(target, plant) {
+    	console.log(plant.file);
     		fetch("/plant/date?id="+plant.id)
     			.then(res => res.text())
     			.then(data => {
@@ -304,7 +304,7 @@
     			setPage(e.target.innerHTML); // '<span class="number-button">'+i+'</span>'의 i를 넣어준다.
     		})
     	})
-    	setPage(1);
+    	setPage(1); // 페이지 1로 세팅
     </script>
     
 </body>
