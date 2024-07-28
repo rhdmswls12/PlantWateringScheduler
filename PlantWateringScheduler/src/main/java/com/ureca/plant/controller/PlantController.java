@@ -123,36 +123,36 @@ public class PlantController {
 	
 	@ResponseBody
 	@GetMapping("/date")
-	public java.sql.Date updatedList(@RequestParam("id") int id) {
+	public java.sql.Date updatedList(@RequestParam("id") int id) throws SQLException {
 	
 		java.sql.Date response = null;
-		System.out.println(id);
-		try {
-			Plant plant = service.get(id);
-//			int period = Integer.parseInt(plant.getPeriod()); // 주기
-			Date currentDate = plant.getDate(); // 마지막 물 준 날짜
-			
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(currentDate);
-			cal.add(Calendar.DATE, plant.getPeriod());
-			String nextDateStr = format.format(cal.getTime());
-			
-			// String을 java.sql.Date로 변환
-	        java.util.Date utilDate = null;
-	        try {
-				utilDate = format.parse(nextDateStr);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-	        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-
-			response = sqlDate;
-			service.editDate(id, sqlDate); // db 갱신
-			
-		} catch (SQLException e) {
+		Plant plant = service.get(id);
+		Date currentDate = plant.getDate(); // 마지막 물 준 날짜
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.DATE, plant.getPeriod());
+		String nextDateStr = format.format(cal.getTime());
+		
+		// String을 java.sql.Date로 변환
+        java.util.Date utilDate = null;
+        try {
+			utilDate = format.parse(nextDateStr);
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+		response = sqlDate;
+		try {
+			service.editDate(id, sqlDate);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // db 갱신
+			
+		
 		return response;
 	}
 	

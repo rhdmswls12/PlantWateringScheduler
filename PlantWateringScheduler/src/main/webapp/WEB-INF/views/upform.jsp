@@ -9,13 +9,17 @@
 	<link rel="stylesheet"
     	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 <style>
 	body {
+	font-family: "Noto Sans KR", sans-serif;
 	position: relative;
 	width: 100vw;
 	height: 100vh;
 }
-h3 {
+h4 {
 	text-align: center;
 	color: gray;
 }
@@ -77,7 +81,7 @@ input {
 </head>
 <body>
 	<div class="container">
-	<h3>식물 정보 수정</h3>
+	<h4 class="p-3">식물 정보 수정</h4>
 	<form method="post" enctype="multipart/form-data">
  			<div class="img-area select-image"">
  				<input type="file" id="file" name="targetImage" accept="image/*" hidden>

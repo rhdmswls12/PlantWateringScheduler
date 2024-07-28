@@ -11,13 +11,14 @@
     <link rel="stylesheet"
     	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 <style>
 body {
-	position: relative;
-	width: 100vw;
-	height: 100vh;
+	font-family: "Noto Sans KR", sans-serif;
 }
-h3 {
+h4 {
 	text-align: center;
 	color: gray;
 }
@@ -95,7 +96,7 @@ a:hover {
 <body>
 	<div class="container">
 
-        <h3 class="p-3"> 나의 식물 등록 </h3>
+        <h4 class="p-3"> 나의 식물 등록 </h4>
 
         <form method="post" enctype="multipart/form-data">
  			<div class="img-area select-image"">
