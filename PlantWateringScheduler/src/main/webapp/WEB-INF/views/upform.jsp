@@ -80,10 +80,10 @@ input {
 	<h3>식물 정보 수정</h3>
 	<form method="post" enctype="multipart/form-data">
  			<div class="img-area select-image"">
- 				<input type="file" id="file" name="image" accept="image/*" hidden>
+ 				<input type="file" id="file" name="targetImage" accept="image/*" hidden>
  				<span class="material-symbols-outlined">image</span>
  				<p>식물 사진</p>
- 				<!-- <img src="../images/monstera.jpg"> -->
+ 				<img src="${plant.file}">
  			</div>
  			<script>
             	const selectImg = document.querySelector('.select-image');
@@ -104,7 +104,7 @@ input {
             			img.src = imgUrl;
             			imgArea.appendChild(img);
             		}
-            		reader.readAsDataURL(image);e
+            		reader.readAsDataURL(image);
             	})
             	
             </script>
@@ -122,7 +122,7 @@ input {
             	<div class="form-group col-md-12">
             		<label class="" for="period">주기</label>
             		<div class="">
-            			<input type="text" id="date" name="period" value="${plant.period}"
+            			<input type="text" id="period" name="period" value="${plant.period}"
             				class="form-control input-sm" required/>
             		</div>
             	</div>
@@ -153,6 +153,5 @@ input {
         </form>
 	</div>
 
-	   		<!-- <button type="button" onClick="location.href='delete?no=${plant.id}'">삭제</button>-->
 </body>
 </html>

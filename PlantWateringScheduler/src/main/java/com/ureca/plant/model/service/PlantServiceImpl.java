@@ -22,8 +22,8 @@ public class PlantServiceImpl implements PlantService {
 	}
 
 	@Override
-	public int edit(Plant plant) throws SQLException {
-		return dao.update(plant);
+	public int edit(int id, String file, String name, int period, Date date) throws SQLException {
+		return dao.update(id, file, name, period, date);
 	}
 	
 	@Override

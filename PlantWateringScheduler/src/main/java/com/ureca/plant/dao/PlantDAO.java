@@ -17,8 +17,8 @@ public interface PlantDAO {
 	@Insert("insert into plant (file, name, period, date) values (#{file}, #{name}, #{period}, #{date})")
 	public int insert(String file, String name, int period, Date date) throws SQLException;
 	
-	@Update("update plant set name=#{name}, period=#{period}, date=#{date} where id=#{id}")
-	public int update(Plant plant) throws SQLException; // 정보 수정
+	@Update("update plant set file=#{file}, name=#{name}, period=#{period}, date=#{date} where id=#{id}")
+	public int update(int id, String file, String name, int period, Date date) throws SQLException; // 정보 수정
 	
 	@Update("update plant set date=#{date} where id=#{id}")
 	public int updateDate(int id,Date date) throws SQLException; // 날짜 갱신

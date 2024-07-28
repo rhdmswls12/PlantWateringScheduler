@@ -257,9 +257,8 @@
     			});
     	}
     	
-    	const COUNT_PER_PAGE = 4; // 한 페이지 당 최대 5개 요소
+    	const COUNT_PER_PAGE = 4; // 한 페이지 당 최대 4개 요소
     	let plantItemEls = document.querySelectorAll('.plant-item');
-    	//console.log(plantItemEls.length);
 		
     	function getTotalPageCount() {
     		return Math.ceil(plantItemEls.length/COUNT_PER_PAGE)
