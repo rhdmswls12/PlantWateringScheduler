@@ -13,11 +13,12 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
  <style type="text/css">
- 	html {
+ 	body {
  		font-family: "Noto Sans KR", sans-serif;
  	}	
 	.title {
@@ -176,6 +177,9 @@
 	.number-button:hover {
 	   	cursor: pointer;
 	}
+	.psychiatry {
+		color: #fff;
+	}
   </style>
 </head>
 <body>
@@ -197,7 +201,15 @@
 					<div class="next-date">${plant.date}</div>
 				</div>
 				<div class="circle">
-					<img class="plant-profile" src="${plant.file}">
+					<c:if test="${not empty plant.file}">
+						<img class="plant-profile" src="${plant.file}">
+					</c:if>
+					<c:if test="${empty plant.file}">
+						<span class="material-symbols-outlined psychiatry">
+							psychiatry
+						</span>
+					</c:if>
+					<!--<img class="plant-profile" src="${not empty plant.file ? plant.file : '../images/flower.png'}"> -->
 					<div class="watering" onclick="updateDate(this, { id: ${plant.id}, name: '${plant.name}', period: ${plant.period}, date: '${plant.date}' })">
 						<a href="javascript:void(0)">
 							<span class="material-symbols-outlined">Potted_Plant</span>

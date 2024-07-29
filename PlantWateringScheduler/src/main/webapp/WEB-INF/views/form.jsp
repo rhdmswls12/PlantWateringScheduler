@@ -91,6 +91,17 @@ a:hover {
 .hide {
 	display: none;
 }
+button {
+	background: #75b064;
+	color: white;
+	border: none;
+	border-radius: 14px;
+	padding: 10px;
+}
+button:hover {
+	background: #598c4a;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -179,10 +190,10 @@ a:hover {
 
             <div class="btn-group">
             	<div class="">
-            		<button type="submit" value="Register" class="btn btn-success">저장</button>
+            		<button type="submit" class="save">저장</button>
             	</div>
             	<div class="">
-            		<button type="submit" value="Register" class="btn btn-success">
+            		<button type="submit" class="list">
             			<a href="list">내 식물들</a>
             		</button>
             	</div>

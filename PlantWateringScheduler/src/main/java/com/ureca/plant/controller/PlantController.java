@@ -40,72 +40,74 @@ public class PlantController {
 	
 	@PostMapping("/form")
 	public String regist(
-			@RequestParam("targetImage") MultipartFile file,
-			@RequestParam ("name") String name,
-			@RequestParam("period") int period,
-			@RequestParam("date") Date date
-			) { // DB 입력
-		
-		// 이미지
-		String dateStr = new SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
-		String timeStr = new SimpleDateFormat("HHmmss").format(new java.util.Date());
-		String uploadDir = System.getProperty("user.home")+"/Desktop/userGroup/";
-	    Path uploadPath = Paths.get(uploadDir);
+	        @RequestParam("targetImage") MultipartFile file,
+	        @RequestParam("name") String name,
+	        @RequestParam("period") int period,
+	        @RequestParam("date") Date date) { // DB 입력
 	    
 	    String filePath = null;
-		try {
-	        if (!Files.exists(uploadPath)) {
-	            Files.createDirectories(uploadPath);
+
+	    // 파일이 비어 있지 않은 경우에만 이미지 처리
+	    if (!file.isEmpty()) {
+	        // 이미지
+	        String dateStr = new SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
+	        String timeStr = new SimpleDateFormat("HHmmss").format(new java.util.Date());
+	        String uploadDir = System.getProperty("user.home") + "/Desktop/userGroup/";
+	        Path uploadPath = Paths.get(uploadDir);
+
+	        try {
+	            if (!Files.exists(uploadPath)) {
+	                Files.createDirectories(uploadPath);
+	            }
+
+	            String originalFileName = file.getOriginalFilename();
+	            String fileExtension = "";
+	            String fileNameWithoutExtension = originalFileName;
+
+	            int dotIndex = originalFileName.lastIndexOf(".");
+	            if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
+	                fileExtension = originalFileName.substring(dotIndex);
+	                fileNameWithoutExtension = originalFileName.substring(0, dotIndex);
+	            }
+
+	            String newFileName = fileNameWithoutExtension + "_" + dateStr + timeStr + fileExtension;
+	            filePath = uploadDir + newFileName;
+
+	            Path destination = Paths.get(filePath);
+	            file.transferTo(destination.toFile());
+	            String basePath = "/userGroup";
+	            int startIndex = filePath.indexOf(basePath);
+	            filePath = filePath.substring(startIndex);
+
+	        } catch (Exception err) {
+	            err.printStackTrace();
 	        }
-
-	        String originalFileName = file.getOriginalFilename();
-	        String fileExtension = "";
-	        String fileNameWithoutExtension = originalFileName;
-
-	        int dotIndex = originalFileName.lastIndexOf(".");
-	        if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
-	            fileExtension = originalFileName.substring(dotIndex);
-	            fileNameWithoutExtension = originalFileName.substring(0, dotIndex);
-	        }
-
-	        String newFileName = fileNameWithoutExtension + "_" + dateStr + timeStr + fileExtension;
-	        filePath = uploadDir + newFileName;
-	        
-	        Path destination = Paths.get(filePath);
-	        file.transferTo(destination.toFile());
-	        String basePath = "/userGroup";
-	        int startIndex = filePath.indexOf(basePath);
-	        filePath=filePath.substring(startIndex);
-	        
-	    } catch (Exception err) {
-	        err.printStackTrace();
 	    }
-		
-		Date currentDate = date;
-		
-		// SimpleDateFormat을 사용하여 날짜 형식 지정
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(currentDate);
-		cal.add(Calendar.DATE, period);
-		String nextDateStr = format.format(cal.getTime());
-		
-		
-		// String을 java.sql.Date로 변환
-        java.util.Date utilDate = null;
-		try {
-			utilDate = format.parse(nextDateStr);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
-		try {
-			service.add(filePath, name, period, sqlDate);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return "redirect:list";
+	    Date currentDate = date;
+
+	    // SimpleDateFormat을 사용하여 날짜 형식 지정
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(currentDate);
+	    cal.add(Calendar.DATE, period);
+	    String nextDateStr = format.format(cal.getTime());
+
+	    // String을 java.sql.Date로 변환
+	    java.util.Date utilDate = null;
+	    try {
+	        utilDate = format.parse(nextDateStr);
+	    } catch (ParseException e) {
+	        e.printStackTrace();
+	    }
+	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+	    try {
+	        service.add(filePath, name, period, sqlDate);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return "redirect:list";
 	}
 	
 	@GetMapping("/list")
@@ -175,40 +177,42 @@ public class PlantController {
 			@RequestParam("date") Date date
 			) { // DB 수정 요청
 
-//		service.edit(plant);
-		String dateStr = new SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
-		String timeStr = new SimpleDateFormat("HHmmss").format(new java.util.Date());
-		String uploadDir = System.getProperty("user.home")+"/Desktop/userGroup/";
-		Path uploadPath = Paths.get(uploadDir);
-		
 		String filePath = null;
-		try {
-	        if (!Files.exists(uploadPath)) {
-	            Files.createDirectories(uploadPath);
-	        }
 
-	        String originalFileName = file.getOriginalFilename();
-	        String fileExtension = "";
-	        String fileNameWithoutExtension = originalFileName;
+		if (!file.isEmpty()) {
+			String dateStr = new SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
+			String timeStr = new SimpleDateFormat("HHmmss").format(new java.util.Date());
+			String uploadDir = System.getProperty("user.home")+"/Desktop/userGroup/";
+			Path uploadPath = Paths.get(uploadDir);
+			
+			try {
+		        if (!Files.exists(uploadPath)) {
+		            Files.createDirectories(uploadPath);
+		        }
 
-	        int dotIndex = originalFileName.lastIndexOf(".");
-	        if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
-	            fileExtension = originalFileName.substring(dotIndex);
-	            fileNameWithoutExtension = originalFileName.substring(0, dotIndex);
-	        }
+		        String originalFileName = file.getOriginalFilename();
+		        String fileExtension = "";
+		        String fileNameWithoutExtension = originalFileName;
 
-	        String newFileName = fileNameWithoutExtension + "_" + dateStr + timeStr + fileExtension;
-	        filePath = uploadDir + newFileName;
-	        
-	        Path destination = Paths.get(filePath);
-	        file.transferTo(destination.toFile());
-	        String basePath = "/userGroup";
-	        int startIndex = filePath.indexOf(basePath);
-	        filePath=filePath.substring(startIndex);
-	        
-	    } catch (Exception err) {
-	        err.printStackTrace();
-	    }
+		        int dotIndex = originalFileName.lastIndexOf(".");
+		        if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
+		            fileExtension = originalFileName.substring(dotIndex);
+		            fileNameWithoutExtension = originalFileName.substring(0, dotIndex);
+		        }
+
+		        String newFileName = fileNameWithoutExtension + "_" + dateStr + timeStr + fileExtension;
+		        filePath = uploadDir + newFileName;
+		        
+		        Path destination = Paths.get(filePath);
+		        file.transferTo(destination.toFile());
+		        String basePath = "/userGroup";
+		        int startIndex = filePath.indexOf(basePath);
+		        filePath=filePath.substring(startIndex);
+		        
+		    } catch (Exception err) {
+		        err.printStackTrace();
+		    }
+		}
 		
 		Date currentDate = date;
 		
