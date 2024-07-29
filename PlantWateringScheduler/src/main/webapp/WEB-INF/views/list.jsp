@@ -16,6 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
  <style type="text/css">
  	body {
@@ -25,15 +28,83 @@
 		position: relative;
 		align-items: center;
 	}
+	.header-icon {
+		display: flex;
+		gap: 10px;
+		justify-content: right;
+		margin-right: 50px;
+	}
+	.search {
+		position: relative;
+		width: 30px;
+		height: 30px;
+		background: #75b064;
+		border-radius: 30px;
+		transition: 0.5s;
+		overflow: hidden;
+		border: 1px solid #75b064;
+	}
+	.search:hover {
+		background: #598c4a;
+		cursor: pointer;
+	}
+	.search.active {
+		width: 360px;
+		background: #fff;
+	}
+	.search.active .clear {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.search.active .search-icon {
+		position: absolute;
+		background: #fff;
+		color: #75b064;
+	}
+	.search-icon {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 30px;
+		height: 30px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+	}
+	.search .input {
+		position: relative;
+		width: 360px;
+		height: 30px;
+		left: 32px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.search .input input {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		border: none;
+		outline: none;
+	}
+	.clear {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 15px;
+		height: 15px;
+		right: 15px;
+		cursor: pointer;
+		display: none;
+		color: #75b064;
+	}
 	.add {
-		width: 60px;
-	   	height: 60px;
-	   	position: absolute;
-	   	top: 0;
-	   	right: 10px;
+		width: 30px;
+	   	height: 30px;
 	   	display: flex;
-	   	justify-content: center;
-	   	align-items: center;
 	   	color: #75b064;
 	   	}
 	.add:hover {
@@ -41,7 +112,6 @@
 	}
 	.add a {
 	   	cursor: pointer;
-		color: black;
 	}
 	h2 {
 		text-align: center;
@@ -180,18 +250,46 @@
 	.psychiatry {
 		color: #fff;
 	}
+	.modal {
+		width: 500px;
+		border-radius: 14px;
+	}
   </style>
 </head>
 <body>
 <div class="container">
 	<div class="title">
 		<h2 class="p-3">내 식물</h2>
-	<div class="add">
-		<a href="form">
-   			<span class="material-symbols-outlined add">add</span>
-   		</a>
+		<div class="header-icon">
+			<div class="search">
+				<span class="material-symbols-outlined search-icon">
+					search
+				</span>
+				<div class="input">
+					<input type="text" name="name" id="search-input" placeholder="식물 이름을 입력하세요."/>
+				</div>
+				<span class="material-symbols-outlined clear">
+					close
+				</span>
+			</div>
+			<div class="add">
+				<a href="form">
+		   			<span class="material-symbols-outlined add">add</span>
+		   		</a>
+			</div>
+		</div>
 	</div>
-	</div>
+	<script>
+		const icon = document.querySelector('.search-icon');
+		const search = document.querySelector('.search');
+		icon.onclick = function() {
+			search.classList.toggle('active');
+		}
+		const clear = document.querySelector('.clear');
+		clear.addEventListener('click', function() {
+			document.getElementById('search-input').value='';
+		})
+	</script>
 
 		<c:if test="${!empty list }">
 			<c:forEach items="${list}" var="plant">
@@ -209,7 +307,6 @@
 							psychiatry
 						</span>
 					</c:if>
-					<!--<img class="plant-profile" src="${not empty plant.file ? plant.file : '../images/flower.png'}"> -->
 					<div class="watering" onclick="updateDate(this, { id: ${plant.id}, name: '${plant.name}', period: ${plant.period}, date: '${plant.date}' })">
 						<a href="javascript:void(0)">
 							<span class="material-symbols-outlined">Potted_Plant</span>
@@ -220,10 +317,6 @@
 				<div class="information">
 					<div class="plant-name">${plant.name}</div>
 					<div class="button-group">
-						<!-- <button type="button">
-	              		    <a href="upform?id=${plant.id}" style="color: black;">완료</a>
-	              		</button>
-	              		 -->
               		     <a href="upform?id=${plant.id}">
               		    	<span class="material-symbols-outlined edit">edit</span>
               		    </a>
@@ -264,6 +357,38 @@
     			});
     	}
     	
+    	// 검색 필터링
+    	const searchInput = document.getElementById('search-input');
+    	
+    	// 검색어가 비어있을 때 원래 리스트 보여주기
+    	searchInput.addEventListener('input', function() {
+    	    const searchTerm = this.value;
+    	    plantItemEls.forEach((item) => {
+    	        const plantName = item.querySelector('.plant-name').textContent;
+    	        if (plantName.includes(searchTerm) || searchTerm === '') {
+    	            item.style.display = 'flex';
+    	        } else {
+    	            item.style.display = 'none';
+    	        }
+    	    });
+    	    setPageButtons();
+    	    setPage(1);
+    	});
+    	
+    	// 검색어 입력 후 엔터 키 입력 시 필터링 된 리스트 보여주기
+    	searchInput.addEventListener('keypress', function(){
+    		if (event.key == 'Enter') {
+    			const searchItem = this.value;
+        		plantItemEls.forEach((item) => {
+        			const plantName = item.querySelector('.plant-name').textContent;
+        			if (plantName.includes(searchItem)) {
+        				item.style.display = 'flex';
+        			} else {
+        				item.style.display = 'none';
+        			}
+        		});
+    		}
+    	})
     	const COUNT_PER_PAGE = 4; // 한 페이지 당 최대 4개 요소
     	let plantItemEls = document.querySelectorAll('.plant-item');
 		

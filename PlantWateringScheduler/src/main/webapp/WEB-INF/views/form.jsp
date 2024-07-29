@@ -13,7 +13,9 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<!-- 폰트 -->
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
 <style>
 body {
 	font-family: "Noto Sans KR", sans-serif;
@@ -189,15 +191,11 @@ button:hover {
             </div>
 
             <div class="btn-group">
-            	<div class="">
-            		<button type="submit" class="save">저장</button>
-            	</div>
-            	<div class="">
-            		<button type="submit" class="list">
-            			<a href="list">내 식물들</a>
-            		</button>
-            	</div>
-            </div>	
+            	<button type="submit" class="save">저장</button>
+            	<button type="submit" class="list">
+           			<a href="list">내 식물들</a>
+           		</button>
+            </div>
         </form>
     </div>
     
