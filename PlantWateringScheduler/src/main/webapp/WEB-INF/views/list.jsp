@@ -18,12 +18,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="stylesheet" href="../css/style.css" type="text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
  <style type="text/css">
- 	body {
- 		font-family: "Noto Sans KR", sans-serif;
- 	}	
 	.title {
 		position: relative;
 		align-items: center;
@@ -38,18 +36,16 @@
 		position: relative;
 		width: 30px;
 		height: 30px;
-		background: #75b064;
 		border-radius: 30px;
 		transition: 0.5s;
 		overflow: hidden;
-		border: 1px solid #75b064;
 	}
 	.search:hover {
-		background: #598c4a;
 		cursor: pointer;
 	}
 	.search.active {
 		width: 360px;
+		border: 1px solid #75b064;
 		background: #fff;
 	}
 	.search.active .clear {
@@ -59,8 +55,6 @@
 	}
 	.search.active .search-icon {
 		position: absolute;
-		background: #fff;
-		color: #75b064;
 	}
 	.search-icon {
 		position: absolute;
@@ -71,7 +65,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		color: #fff;
+		color: #75b064;
 	}
 	.search .input {
 		position: relative;
@@ -106,27 +100,14 @@
 	   	height: 30px;
 	   	display: flex;
 	   	color: #75b064;
-	   	}
+	   	justify-content: center;
+		align-items: center;
+	 }
 	.add:hover {
 	   	color: #598c4a;
 	}
 	.add a {
 	   	cursor: pointer;
-	}
-	h2 {
-		text-align: center;
-		color: gray;
-	}
-	.container {
-		width: 500px;
-		position: absolute;
-		border: 1px solid lightGray;
-		box-shadow: 10px 10px 10px rgba(0,0,0,.5);
-		border-radius: 14px;
-		padding: 20px;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%,-50%);
 	}
 	.plant-item {
 	   	display: flex;
@@ -141,12 +122,12 @@
 	   	margin-top: 15px;
 	}
 	.next-date {
-	   	color: green;
+	   	color: #75b064;
 	   	margin-top: 5px;
 	}
 	.circle {
-	   	width: 80px;
-	   	height: 80px;
+	   	width: 100px;
+	   	height: 100px;
 	   	border-radius: 50%;
 	   	display: flex;
 	   	background: #75b064;
@@ -279,17 +260,6 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		const icon = document.querySelector('.search-icon');
-		const search = document.querySelector('.search');
-		icon.onclick = function() {
-			search.classList.toggle('active');
-		}
-		const clear = document.querySelector('.clear');
-		clear.addEventListener('click', function() {
-			document.getElementById('search-input').value='';
-		})
-	</script>
 
 		<c:if test="${!empty list }">
 			<c:forEach items="${list}" var="plant">
@@ -359,37 +329,47 @@
     	
     	// 검색 필터링
     	const searchInput = document.getElementById('search-input');
-    	
+    	const icon = document.querySelector('.search-icon');
+		const search = document.querySelector('.search');
+		const clear = document.querySelector('.clear');
+		
+		
+		// 영역 밖 클릭 시 active 제거
+		document.addEventListener('click', function(event) {
+            if (!search.contains(event.target) && event.target !== icon) {
+                search.classList.remove('active');
+            }
+        });
     	// 검색어가 비어있을 때 원래 리스트 보여주기
-    	searchInput.addEventListener('input', function() {
-    	    const searchTerm = this.value;
-    	    plantItemEls.forEach((item) => {
-    	        const plantName = item.querySelector('.plant-name').textContent;
-    	        if (plantName.includes(searchTerm) || searchTerm === '') {
-    	            item.style.display = 'flex';
-    	        } else {
-    	            item.style.display = 'none';
-    	        }
-    	    });
-    	    setPageButtons();
-    	    setPage(1);
-    	});
+    	function filterPlants() {
+            const searchTerm = searchInput.value.toLowerCase();
+            plantItemEls.forEach((item) => {
+                const plantName = item.querySelector('.plant-name').textContent.toLowerCase();
+                if (plantName.includes(searchTerm) || searchTerm === '') {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    	
+    	icon.onclick = function() {
+			event.stopPropagation();
+			search.classList.add('active'); // search 아이콘 클릭 시 input창 보이도록 유지
+			filterPlants();
+		}
+		clear.addEventListener('click', function() {
+			document.getElementById('search-input').value='';
+			filterPlants();
+		})
     	
     	// 검색어 입력 후 엔터 키 입력 시 필터링 된 리스트 보여주기
     	searchInput.addEventListener('keypress', function(){
-    		if (event.key == 'Enter') {
-    			const searchItem = this.value;
-        		plantItemEls.forEach((item) => {
-        			const plantName = item.querySelector('.plant-name').textContent;
-        			if (plantName.includes(searchItem)) {
-        				item.style.display = 'flex';
-        			} else {
-        				item.style.display = 'none';
-        			}
-        		});
-    		}
+    		if (event.key === 'Enter') {
+                filterPlants();
+            }
     	})
-    	const COUNT_PER_PAGE = 4; // 한 페이지 당 최대 4개 요소
+    	const COUNT_PER_PAGE = 3; // 한 페이지 당 최대 3개 요소
     	let plantItemEls = document.querySelectorAll('.plant-item');
 		
     	function getTotalPageCount() {

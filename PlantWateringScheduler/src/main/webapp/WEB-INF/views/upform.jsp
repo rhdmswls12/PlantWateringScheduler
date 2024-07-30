@@ -12,57 +12,9 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../css/style.css" type="text/css">
 <style>
-	body {
-	font-family: "Noto Sans KR", sans-serif;
-	position: relative;
-	width: 100vw;
-	height: 100vh;
-}
-h4 {
-	text-align: center;
-	color: gray;
-}
-.container {
-	width: 500px;
-	position: absolute;
-	border: 1px solid lightGray;
-	box-shadow: 10px 10px 10px rgba(0,0,0,.5);
-	border-radius: 14px;
-	padding: 20px;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-}
-.img-area {
-	position: relative;
-	width: 50%;
-	height: 200px;
-	border: none;
-	border-radius: 14px;
-	background: lightGray;
-	border-raidus: 14px;
-	left: 50%;
-	transform: translate(-50%);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	cursor: pointer;
-	color: white;
-}
-.img-area img {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: center;
-	border-radius: 14px;
-	z-index: 100;
-}
-	span.material-symbols-outlined {
+span.material-symbols-outlined {
 	font-size: 50px;
 }
 label {
@@ -144,10 +96,10 @@ input {
 
             <div class="btn-group">
             	<div class="">
-            		<button type="submit" value="Register" class="btn btn-success">저장</button>
+            		<button type="submit" class="btn btn-success">저장</button>
             	</div>
             	<div class="">
-            		<button type="submit" value="Register" class="btn btn-success">
+            		<button type="submit" class="btn btn-success">
             			내 식물들
             		</button>
             	</div>

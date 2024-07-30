@@ -12,57 +12,11 @@
     	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<!-- 폰트 -->
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
+	<link rel="stylesheet" href="../css/style.css" type="text/css">
 <style>
-body {
-	font-family: "Noto Sans KR", sans-serif;
-}
-h4 {
-	text-align: center;
-	color: gray;
-}
-.container {
-	width: 500px;
-	position: absolute;
-	border: 1px solid lightGray;
-	box-shadow: 10px 10px 10px rgba(0,0,0,.5);
-	border-radius: 14px;
-	padding: 20px;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-}
-.img-area {
-	position: relative;
-	width: 50%;
-	height: 200px;
-	border: none;
-	border-radius: 14px;
-	background: lightGray;
-	border-raidus: 14px;
-	left: 50%;
-	transform: translate(-50%);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	cursor: pointer;
-	color: white;
-}
-.img-area img {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: center;
-	border-radius: 14px;
-	z-index: 100;
-}
 span.material-symbols-outlined {
 	font-size: 50px;
 }
@@ -93,17 +47,7 @@ a:hover {
 .hide {
 	display: none;
 }
-button {
-	background: #75b064;
-	color: white;
-	border: none;
-	border-radius: 14px;
-	padding: 10px;
-}
-button:hover {
-	background: #598c4a;
-	cursor: pointer;
-}
+
 </style>
 </head>
 <body>
@@ -191,10 +135,14 @@ button:hover {
             </div>
 
             <div class="btn-group">
-            	<button type="submit" class="save">저장</button>
-            	<button type="submit" class="list">
-           			<a href="list">내 식물들</a>
-           		</button>
+            	<div>
+	            	<button type="submit" class="btn btn-success">저장</button>
+            	</div>
+            	<div>
+	            	<button type="submit" class="btn btn-success">
+	           			<a href="list">내 식물들</a>
+	           		</button>
+            	</div>
             </div>
         </form>
     </div>
