@@ -174,6 +174,7 @@
 	}
 	.no-data {
 	   	text-align: center;
+	   	margin-bottom: 30px;
 	}
 	.button-group {
 	   	display: flex;
@@ -351,13 +352,15 @@
                     item.style.display = 'none';
                 }
             });
+            setPage(1); // 검색 결과가 필터링된 후 페이지를 1로 설정
+            setPageButtons();
         }
     	
     	icon.onclick = function() {
 			event.stopPropagation();
 			search.classList.add('active'); // search 아이콘 클릭 시 input창 보이도록 유지
 			filterPlants();
-		}
+    	}
 		clear.addEventListener('click', function() {
 			document.getElementById('search-input').value='';
 			filterPlants();
@@ -369,6 +372,7 @@
                 filterPlants();
             }
     	})
+    	
     	const COUNT_PER_PAGE = 3; // 한 페이지 당 최대 3개 요소
     	let plantItemEls = document.querySelectorAll('.plant-item');
 		
@@ -385,18 +389,24 @@
     			numberButtonWrapper.innerHTML += '<span class="number-button">'+i+'</span>';
     		}
     	}
-    	setPageButtons(1);
     	
     	let currentPage;
     	function setPage(pageNumber) {
     		
     		currentPage = Number(pageNumber);
-    		plantItemEls.forEach((item, idx) => {
-    			item.style.display ='none';
-    			if (idx >= COUNT_PER_PAGE  * (pageNumber-1) && idx < COUNT_PER_PAGE * pageNumber) {
-    				item.style.display = 'flex';
-    			}
-    		})
+    		let visibleCount = 0;
+            let start = COUNT_PER_PAGE * (pageNumber - 1);
+            let end = start + COUNT_PER_PAGE;
+            plantItemEls.forEach((item, idx) => {
+                if (item.style.display !== 'none') {
+                    if (visibleCount >= start && visibleCount < end) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                    visibleCount++;
+                }
+            });
     	}
 		
     	function prevPage() {  		
@@ -416,6 +426,7 @@
     			setPage(e.target.innerHTML); // '<span class="number-button">'+i+'</span>'의 i를 넣어준다.
     		})
     	})
+    	setPageButtons();
     	setPage(1); // 페이지 1로 세팅
     </script>
     
